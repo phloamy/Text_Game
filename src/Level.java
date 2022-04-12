@@ -44,11 +44,30 @@ public class Level {
 
     public class Room extends Container {
         private String name;
-        private ArrayList<Room> neighbors;
+        private List<Room> neighbors;
+        private List<Entity> entities;
+        private boolean hasPlayer;
 
         private Room(String name) {
             neighbors = new ArrayList<>();
+            entities = new ArrayList<>();
             this.name = name;
+            hasPlayer = false;
+        }
+
+        public void addPlayer() {
+            player
+        }
+
+        public boolean neighborsPlayer() {
+            for (Room room : neighbors) {
+                if (room.containsPlayer()) return true;
+            }
+            return false;
+        }
+
+        public boolean containsPlayer() {
+            return hasPlayer;
         }
 
         private Room addTwoDirectionNeighbor(Room room) {
@@ -60,6 +79,11 @@ public class Level {
         private Room addNeighbor(Room room) {
             neighbors.add(room);
             return room;
+        }
+
+        public Room getRandomNeighbor() {
+            int rand = (int) (Math.random() * neighbors.size());
+            return neighbors.get(rand);
         }
 
         public String getNeighborNames() {
@@ -84,6 +108,19 @@ public class Level {
 
         public String getName() {
             return name;
+        }
+
+        public boolean isNeighboringEntity(String name) {
+            for (Room room : neighbors) {
+                if (room.hasEntity(name)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean hasPlayer() {
+            return hasPlayer;
         }
     }
 }

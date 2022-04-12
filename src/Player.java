@@ -30,14 +30,6 @@ public class Player extends Container {
         return false;
     }
 
-    public Level.Room getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(Level.Room currentRoom) {
-        this.currentRoom = currentRoom;
-    }
-
     public boolean moveTo(String roomName) {
         Level.Room newRoom = currentRoom.getNeighbor(roomName);
 
@@ -47,5 +39,13 @@ public class Player extends Container {
         }
 
         return false;
+    }
+
+    public Level.Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Level.Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }
