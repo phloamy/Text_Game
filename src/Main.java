@@ -70,7 +70,7 @@ public class Main {
             public void run(String input, Player player) {
                 String[] sections = input.split(" ");
 
-                System.out.println("You currently have: " + player.getItemNames());
+                System.out.println("You currently have: " + player.getContainer().getItemNames());
             }
         });
 

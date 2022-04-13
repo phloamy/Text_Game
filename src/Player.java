@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends Container {
+public class Player {
     private Level.Room currentRoom;
-
+    private Container container;
     public Player(Level.Room room) {
+        this.container = new Container();
         moveTo(room);
     }
 
@@ -12,7 +13,7 @@ public class Player extends Container {
         Item picked = currentRoom.removeItem(itemName);
 
         if (picked != null) {
-            items.add(picked);
+            container.items.add(picked);
             return true;
         }
 
@@ -20,7 +21,7 @@ public class Player extends Container {
     }
 
     public boolean drop(String itemName) {
-        Item item = removeItem(itemName);
+        Item item = container.removeItem(itemName);
 
         if (item != null) {
             currentRoom.addItem(item);
@@ -53,5 +54,9 @@ public class Player extends Container {
 
     public void setCurrentRoom(Level.Room currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    public Container getContainer() {
+        return container;
     }
 }

@@ -1,10 +1,13 @@
-public abstract class BasicEntity extends Container implements Entity {
-    Level.Room currentRoom;
-    String name, description;
+public abstract class BasicEntity implements Entity {
+    protected Level.Room currentRoom;
+    protected String name, description;
+
+    public Container container;
 
     public BasicEntity(Level.Room room, String name, String description) {
         this.name = name;
         this.description = description;
+        this.container = new Container();
         moveTo(room);
     }
 

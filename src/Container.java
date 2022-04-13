@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Container {
+public class Container {
     protected List<Item> items;
 
     public Container() {
