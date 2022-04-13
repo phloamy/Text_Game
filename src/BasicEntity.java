@@ -3,16 +3,23 @@ public abstract class BasicEntity extends Container implements Entity {
     String name, description;
 
     public BasicEntity(Level.Room room, String name, String description) {
-        this.currentRoom = room;
         this.name = name;
         this.description = description;
+        moveTo(room);
     }
 
     public boolean moveTo(String roomName) {
         Level.Room newRoom = currentRoom.getNeighbor(roomName);
+        return moveTo(newRoom);
+    }
 
-        if (newRoom != null) {
-            currentRoom = newRoom;
+    public boolean moveTo(Level.Room room) {
+        if (room != null) {
+            if (currentRoom != null) {
+                currentRoom.removeEntity(this);
+            }
+            currentRoom = room;
+            room.addEntity(this);
             return true;
         }
 
@@ -25,5 +32,15 @@ public abstract class BasicEntity extends Container implements Entity {
 
     public void setCurrentRoom(Level.Room currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
 }

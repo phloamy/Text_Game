@@ -5,7 +5,7 @@ public class Player extends Container {
     private Level.Room currentRoom;
 
     public Player(Level.Room room) {
-        currentRoom = room;
+        moveTo(room);
     }
 
     public boolean pickUp(String itemName) {
@@ -30,15 +30,21 @@ public class Player extends Container {
         return false;
     }
 
-    public boolean moveTo(String roomName) {
-        Level.Room newRoom = currentRoom.getNeighbor(roomName);
-
-        if (newRoom != null) {
-            currentRoom = newRoom;
+    private boolean moveTo(Level.Room room) {
+        if (room != null) {
+            if (currentRoom != null) {
+                currentRoom.removePlayer();
+            }
+            currentRoom = room;
+            room.addPlayer();
             return true;
         }
 
         return false;
+    }
+
+    public boolean moveTo(String roomName) {
+        return moveTo(currentRoom.getNeighbor(roomName));
     }
 
     public Level.Room getCurrentRoom() {

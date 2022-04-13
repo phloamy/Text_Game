@@ -42,6 +42,12 @@ public class Level {
         return null;
     }
 
+    public void updateEntities() {
+        for (Room room : rooms) {
+            room.updateEntities();
+        }
+    }
+
     public class Room extends Container {
         private String name;
         private List<Room> neighbors;
@@ -56,18 +62,42 @@ public class Level {
         }
 
         public void addPlayer() {
-            player
+            hasPlayer = true;
         }
 
-        public boolean neighborsPlayer() {
-            for (Room room : neighbors) {
-                if (room.containsPlayer()) return true;
+        public void removePlayer() {
+            hasPlayer = false;
+        }
+
+        public void addEntity(Entity entity) {
+            if (entity != null) {
+                entities.add(entity);
             }
+        }
+
+        public boolean removeEntity(Entity entity) {
+            if (entity != null && hasEntity(entity)) {
+                return entities.remove(entity);
+            }
+
             return false;
         }
 
-        public boolean containsPlayer() {
+        public boolean hasPlayer() {
             return hasPlayer;
+        }
+
+        public boolean hasEntity(Entity entity) {
+            return entities.contains(entity);
+        }
+
+        public Room getNeighborThatHasPlayer() {
+            for (Room room : neighbors) {
+                if (room.hasPlayer()) {
+                    return room;
+                }
+            }
+            return null;
         }
 
         private Room addTwoDirectionNeighbor(Room room) {
@@ -110,17 +140,25 @@ public class Level {
             return name;
         }
 
-        public boolean isNeighboringEntity(String name) {
-            for (Room room : neighbors) {
-                if (room.hasEntity(name)) {
-                    return true;
-                }
+        private void updateEntities() {
+            for (int i = 0; i < entities.size(); i++) {
+                entities.get(i).act();
             }
-            return false;
         }
 
-        public boolean hasPlayer() {
-            return hasPlayer;
+        public String getEntityNames() {
+            if (entities.size() == 0) return "";
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (Entity entity : entities) {
+                stringBuilder.append(entity.getName());
+                stringBuilder.append(" - ");
+                stringBuilder.append(entity.getDescription());
+                stringBuilder.append(", ");
+            }
+
+            return stringBuilder.substring(0, stringBuilder.length() - 2);
         }
     }
 }

@@ -6,7 +6,7 @@ public class Chicken extends BasicEntity {
 
     @Override
     public void move() {
-        moveTo(currentRoom.getRandomNeighbor().getName());
+        moveTo(currentRoom.getRandomNeighbor());
     }
 
     @Override

@@ -15,6 +15,8 @@ public class Main {
         level.getRoom("hall").addItem(new Item("sword", "It is dangerous to go alone"));
         level.getRoom("hall").addItem(new Item("apple", "Cronch"));
 
+        new Popstar(level.getRoom("dungeon"), "popstar", "fanboy");
+
         Player player = new Player(level.getRoom("hall"));
 
         String response = "";
@@ -26,6 +28,7 @@ public class Main {
             public void run(String input, Player player) {
                 System.out.println("You can go to the: " + player.getCurrentRoom().getNeighborNames());
                 System.out.println("The " + player.getCurrentRoom().getName() + " contains: " + player.getCurrentRoom().getItemNames());
+                System.out.println("The entities present are: " + player.getCurrentRoom().getEntityNames());
             }
         });
         commands.add(new Command("enter", 1) {
@@ -85,40 +88,7 @@ public class Main {
             }
 
             System.out.println();
-
-           /*
-           System.out.println("You are currently in the " + current.getName());
-           System.out.print("What would you like to do: ");
-
-           response = in.nextLine();
-           String[] sections = response.split(" ");
-
-
-
-           if (response.equals("look")) {
-               System.out.println("You can go to the: " + current.getNeighborNames());
-           } else if (response.equals("quit")) {
-               break;
-           } else if (sections.length > 1) {
-               if (sections[0].equals("enter")) {
-                   Level.Room newNode = level.getRoom(sections[1]);
-                   if (newNode == null) {
-                       System.out.println("The room " + sections[1] + " does not exist");
-                   } else {
-                       current = newNode;
-                   }
-               } else if (sections[0].equals("addRoom")) {
-                   level.addRoom(sections[1]);
-                   level.addUndirectedEdge(current.getName(), sections[1]);
-               }
-           } else {
-               System.out.println("The valid commands are: ");
-               System.out.println("look");
-               System.out.println("enter <room name>");
-               System.out.println("addRoom <room name>");
-               System.out.println("quit");
-           }
-            */
+            level.updateEntities();
         } while (true);
     }
 
