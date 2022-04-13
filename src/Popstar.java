@@ -6,7 +6,7 @@ public class Popstar extends BasicEntity {
 
     @Override
     public void move() {
-        Level.Room neighboringPlayerRoom = currentRoom.getNeighborThatHasPlayer();
+        Level.Room neighboringPlayerRoom = getCurrentRoom().getNeighborThatHasPlayer();
 
         if (neighboringPlayerRoom != null) {
             moveTo(neighboringPlayerRoom);

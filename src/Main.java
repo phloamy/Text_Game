@@ -16,6 +16,7 @@ public class Main {
         level.getRoom("hall").addItem(new Item("apple", "Cronch"));
 
         new Popstar(level.getRoom("dungeon"), "popstar", "fanboy");
+        new Chicken(level.getRoom("closet"), "cluck", "gobble gobble");
 
         Player player = new Player(level.getRoom("hall"));
 
@@ -68,8 +69,6 @@ public class Main {
         commands.add(new Command("inventory", 0) {
             @Override
             public void run(String input, Player player) {
-                String[] sections = input.split(" ");
-
                 System.out.println("You currently have: " + player.getContainer().getItemNames());
             }
         });

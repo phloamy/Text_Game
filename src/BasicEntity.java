@@ -1,5 +1,5 @@
 public abstract class BasicEntity implements Entity {
-    protected Level.Room currentRoom;
+    private Level.Room currentRoom;
     protected String name, description;
 
     public Container container;
@@ -8,6 +8,7 @@ public abstract class BasicEntity implements Entity {
         this.name = name;
         this.description = description;
         this.container = new Container();
+        room.getLevel().addEntity(this);
         moveTo(room);
     }
 

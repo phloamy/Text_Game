@@ -4,14 +4,23 @@ import java.util.List;
 public class Level {
 
     private List<Room> rooms;
+    private List<Entity> entities;
 
     public Level() {
         rooms = new ArrayList<>();
+        entities = new ArrayList<>();
+    }
+
+    public void addEntity(Entity entity) {
+        if (entity != null) {
+            entities.add(entity);
+        }
     }
 
     public Room addRoom(String name) {
         Room room = new Room(name);
         rooms.add(room);
+        room.setLevel(this);
         return room;
     }
 
@@ -43,12 +52,13 @@ public class Level {
     }
 
     public void updateEntities() {
-        for (Room room : rooms) {
-            room.updateEntities();
+        for (Entity entity : entities) {
+            entity.act();
         }
     }
 
     public class Room extends Container {
+        private Level level;
         private String name;
         private List<Room> neighbors;
         private List<Entity> entities;
@@ -59,6 +69,10 @@ public class Level {
             entities = new ArrayList<>();
             this.name = name;
             hasPlayer = false;
+        }
+
+        public void setLevel(Level level) {
+            this.level = level;
         }
 
         public void addPlayer() {
@@ -140,12 +154,6 @@ public class Level {
             return name;
         }
 
-        private void updateEntities() {
-            for (int i = 0; i < entities.size(); i++) {
-                entities.get(i).act();
-            }
-        }
-
         public String getEntityNames() {
             if (entities.size() == 0) return "";
 
@@ -159,6 +167,10 @@ public class Level {
             }
 
             return stringBuilder.substring(0, stringBuilder.length() - 2);
+        }
+
+        public Level getLevel() {
+            return level;
         }
     }
 }
