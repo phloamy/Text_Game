@@ -23,25 +23,17 @@ public class Player {
     public boolean drop(String itemName) {
         Item item = container.removeItem(itemName);
 
-        if (item != null) {
-            currentRoom.addItem(item);
-            return true;
-        }
+        if (item == null) return false;
 
-        return false;
+        currentRoom.addItem(item);
+        return true;
     }
 
     private boolean moveTo(Level.Room room) {
-        if (room != null) {
-            if (currentRoom != null) {
-                currentRoom.removePlayer();
-            }
-            currentRoom = room;
-            room.addPlayer();
-            return true;
-        }
+        if (room == null) return false;
 
-        return false;
+        currentRoom = room;
+        return true;
     }
 
     public boolean moveTo(String roomName) {

@@ -18,16 +18,14 @@ public abstract class BasicEntity implements Entity {
     }
 
     public boolean moveTo(Level.Room room) {
-        if (room != null) {
-            if (currentRoom != null) {
-                currentRoom.removeEntity(this);
-            }
-            currentRoom = room;
-            room.addEntity(this);
-            return true;
-        }
+        if (room == null) return false;
 
-        return false;
+        if (currentRoom != null) {
+            currentRoom.removeEntity(this);
+        }
+        currentRoom = room;
+        room.addEntity(this);
+        return true;
     }
 
     public Level.Room getCurrentRoom() {
@@ -46,5 +44,13 @@ public abstract class BasicEntity implements Entity {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -5,10 +5,23 @@ public class Level {
 
     private List<Room> rooms;
     private List<Entity> entities;
+    private Player player;
 
     public Level() {
         rooms = new ArrayList<>();
         entities = new ArrayList<>();
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player p) {
+        this.player = p;
+    }
+
+    public void addItem(String roomName, Item item) {
+        getRoom(roomName).addItem(item);
     }
 
     public void addEntity(Entity entity) {
@@ -62,25 +75,15 @@ public class Level {
         private String name;
         private List<Room> neighbors;
         private List<Entity> entities;
-        private boolean hasPlayer;
 
         private Room(String name) {
             neighbors = new ArrayList<>();
             entities = new ArrayList<>();
             this.name = name;
-            hasPlayer = false;
         }
 
         public void setLevel(Level level) {
             this.level = level;
-        }
-
-        public void addPlayer() {
-            hasPlayer = true;
-        }
-
-        public void removePlayer() {
-            hasPlayer = false;
         }
 
         public void addEntity(Entity entity) {
@@ -98,7 +101,7 @@ public class Level {
         }
 
         public boolean hasPlayer() {
-            return hasPlayer;
+            return level.player.getCurrentRoom() == this;
         }
 
         public boolean hasEntity(Entity entity) {
@@ -112,6 +115,24 @@ public class Level {
                 }
             }
             return null;
+        }
+
+        public Room getNeighborWithoutPlayer() {
+            for (Room room : neighbors) {
+                if (!room.hasPlayer()) {
+                    return room;
+                }
+            }
+            return null;
+        }
+
+        public boolean neighborsPlayer() {
+            for (Room room : neighbors) {
+                if (room.hasPlayer()) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private Room addTwoDirectionNeighbor(Room room) {

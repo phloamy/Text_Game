@@ -1,19 +1,30 @@
 public abstract class Command {
 
     private String name;
-    private int numArguments;
+    protected String argumentString;
 
-    public Command(String name, int numArguments) {
+    public Command(String name) {
         this.name = name;
-        this.numArguments = numArguments;
+    }
+
+    private void init(String argumentString) {
+        this.argumentString = argumentString;
     }
 
     public boolean matches(String input) {
         String[] split = input.split(" ");
-        return (split.length == numArguments + 1 && split[0].equals(name));
+        if (split[0].equals(name)) {
+            init(input.substring(split[0].length()).trim());
+            return true;
+        }
+        return false;
     }
 
-    public abstract void run(String input, Player player);
+    public abstract void run(Level level);
+
+    public String getCommandWord() {
+        return name;
+    }
 
     @Override
     public String toString() {
